@@ -24,10 +24,18 @@ export default Marionette.View.extend({
         let nickname = this.$('#nickname-input').val();
         this.$('#helper').html('');
         if (nickname) {
-            workshop.signUp(nickname).then(result => {
-                if (result.success) Backbone.history.navigate('/', {trigger: true});
-                else self.$('#helper').html('Error occures');
-            })
+            this.$('#login-btn').addClass('disabled').html('Sign in <i class="fa fa-spinner fa-pulse"></i>')
+            setTimeout(() => { //bycicle to prevent eosjs to freeze screen
+                workshop.signUp(nickname).then(result => {
+                    if (!result.success) throw 'Error occures';
+                    return workshop.contractSignUp();
+                }).then(() => {
+                    Backbone.history.navigate('/', {trigger: true});
+                }).catch(err => {
+                    self.$('#login-btn').removeClass('disabled').html('Sign in')
+                    self.$('#helper').html(err);
+                })
+            }, 100);
         } else {
             this.$('#helper').html('Enter your username');
         }

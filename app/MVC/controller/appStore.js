@@ -6,7 +6,8 @@ class Store {
         this.store = {
             masterKey: localStorage.getItem(config.localStorageMasterPrivateKey) || null,
             publicKeys: JSON.parse(localStorage.getItem(config.localStoragePublicKeys)) || null,
-            privateKeys: JSON.parse(localStorage.getItem(config.localStoragePrivateKeys)) || null
+            privateKeys: JSON.parse(localStorage.getItem(config.localStoragePrivateKeys)) || null,
+            nickname: localStorage.getItem(config.localStorageNickname) || null
         }
     }
     getPrivateKeys() {
@@ -22,6 +23,19 @@ class Store {
         this.store.masterKey = keys.masterPrivateKey;
         this.store.publicKeys = keys.publicKeys;
         this.store.privateKeys = keys.privateKeys;
+    }
+    setNickname(nickname) {
+        this.store.nickname = nickname;
+    }
+    saveNickname() {
+        localStorage.setItem(config.localStorageNickname, this.store.nickname);
+    }
+    getNickname() {
+        return this.store.nickname;
+    }
+    clear() {
+        this.store = {};
+        localStorage.clear();
     }
     saveKeys() {
         localStorage.setItem(config.localStorageMasterPrivateKey, this.store.masterKey);

@@ -11,7 +11,8 @@ export default Marionette.Object.extend({
     },
     showRoot: function(){
         if (this.loggedIn()) {
-            console.log('show root');
+            let app = this.options.app;
+            app.showRoot();
         }
     },
     showLogin: function(){
