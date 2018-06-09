@@ -6,6 +6,7 @@ export default Marionette.AppRouter.extend({
         this.controller = new controller();
     },
     appRoutes: {
+        '(/)' : 'showRoot',
         'login(/)' : 'showLogin'
     }
 })
