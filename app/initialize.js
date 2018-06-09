@@ -1,7 +1,10 @@
 import './styles/application.css';
-import App from 'components/App';
+import router from './MVC/controller/appRouter';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new App();
-  app.start();
+  new router();
+  Backbone.history.start({
+    pushState: true,
+    root: '/'
+  })
 });
