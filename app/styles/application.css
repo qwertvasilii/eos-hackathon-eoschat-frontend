@@ -164,3 +164,7 @@ body {
 #tool button {
     height: 2.5em;
 }
+
+#transfer {
+    background-image: url('../img//eos-seeklogo.com.svg')
+}

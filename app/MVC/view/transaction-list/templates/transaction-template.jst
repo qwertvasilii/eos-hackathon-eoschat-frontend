@@ -1,0 +1,17 @@
+<div class="avatar-circle">
+    <% if (from === user) { %>
+        <i class="fa fa-arrow-right" style="color: black; margin-left: 13px; margin-top: 9px;"></i>
+    <% } else { %>
+        <i class="fa fa-arrow-left" style="color: black; margin-left: 13px; margin-top: 9px;"></i>
+    <% } %>
+    </div>
+    <div class="col-md-10 contact-info">
+        <div>
+            <% if (from !== user) { %>
+                from <%= from %>
+            <% } else { %>
+                to <%= to %>
+            <% } %>
+        </div>
+        <%= quantity %>
+    </div>

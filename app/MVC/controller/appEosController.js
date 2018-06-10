@@ -83,6 +83,7 @@ export default {
                   const data = r.action_trace.act.data;
                   const isMy = data.from === user || data.to === user;
                   if (isMy) {
+                      data.seq = r.global_action_seq;
                       transactions.push(data);
                   }
                 }
@@ -102,9 +103,7 @@ export default {
             keyProvider: privateKey,
             httpEndpoint: url
         })
-        console.log(message, receiver, localStorage.getItem(config.localStorageChatKeysPrefix + receiver))
         if (encrypt) message = encryptMessage(JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + receiver)).sessionKey, message);
-        console.log(message);
         return eosPrivate.transaction({
             actions: [
                 {

@@ -12,18 +12,22 @@ export default Marionette.Object.extend({
     },
     showRoot: function(){
         if (this.loggedIn()) {
+            $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
             store.loadData().then(() => {
                 store.startPolling();
                 let app = this.options.app;
+                $('#loading-place').html('');
                 app.showRoot();
             })
         }
     },
     showTransactions: function() {
         if (this.loggedIn()) {
+            $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
             store.loadData().then(() => {
                 store.startPolling();
                 let app = this.options.app;
+                $('#loading-place').html('');
                 app.showTransactions();
             })
         }

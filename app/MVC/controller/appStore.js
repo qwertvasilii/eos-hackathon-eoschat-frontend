@@ -1,6 +1,7 @@
 import config from './appConfig';
 import eosController from './appEosController';
 import UserList from '../model/collections/UserList';
+import TransactionList from '../model/collections/TransactionList';
 import ChatList from '../model/collections/ChatList';
 import _ from 'lodash';
 import { decryptSessionKey } from '../../utils/crypto';
@@ -15,7 +16,8 @@ class Store {
             privateKeys: JSON.parse(localStorage.getItem(config.localStoragePrivateKeys)) || null,
             nickname: localStorage.getItem(config.localStorageNickname) || null,
             users: new UserList(),
-            balance: new Backbone.Model()
+            balance: new Backbone.Model(),
+            transactions: new TransactionList()
         }
     }
     getPrivateKeys() {
@@ -42,7 +44,7 @@ class Store {
         return this.store.nickname;
     }
     clear() {
-        this.store = {users: new UserList(), balance: new Backbone.Model()};
+        this.store = {users: new UserList(), balance: new Backbone.Model(), transactions: new TransactionList()};
         localStorage.clear();
     }
     saveKeys() {
@@ -64,7 +66,6 @@ class Store {
         let self = this;
         let nick = this.store.nickname;
         return eosController.loadUsers().then(data => {
-            console.log(data);
             self.store.users.add(_.filter(data.rows, _row => { return _row.account_name !== nick}), {merge: true});
         })
     }
@@ -76,6 +77,7 @@ class Store {
                     return (_msg.from === _user.get('account_name') && _msg.to === self.getNickname()) || (_msg.from === self.getNickname() && _msg.to === _user.get('account_name'))
                 })
                 msgs = _.sortBy(msgs, 'seq');
+                
                 _user.get('messages').add(msgs, {merge: true})
             })
         })
@@ -93,20 +95,17 @@ class Store {
     loadTransactions() {
         let self = this;
         return eosController.loadTransactions(this.store.nickname).then(data => {
-            console.log(data);
-            self.store.transactions = data;
+            self.store.transactions.add(data, {merge: true});
         })
     }
     loadBalance() {
         let self = this;
         return eosController.getBalance(this.store.nickname).then(data => {
-            console.log(data)
             self.store.balance.set({amount: data[0]})
         })
     }
     startPolling() {
         let self = this;
-        console.log('poll')
         this.loadData().then(() => {
             self.startPolling();
         })

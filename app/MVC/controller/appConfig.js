@@ -1,4 +1,4 @@
-const platformName = 'Kebab Chat';
+const platformName = 'EOS Chat';
 const kebabPlatfromName = platformName.split(' ').join('-').toLowerCase();
 
 module.exports = {
