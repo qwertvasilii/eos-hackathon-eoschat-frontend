@@ -31,6 +31,10 @@ body {
     background: rgb(24,39,77); 
 }
 
+.info {
+    margin-top: 25px;
+}
+
 #login-form {
     margin-top: 150px;
 }
@@ -153,3 +157,10 @@ body {
     margin-top: 15px;
 }
 
+#msg-input {
+    height: 2.5em;
+}
+
+#tool button {
+    height: 2.5em;
+}

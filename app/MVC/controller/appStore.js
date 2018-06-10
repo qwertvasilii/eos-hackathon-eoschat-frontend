@@ -14,7 +14,8 @@ class Store {
             publicKeys: JSON.parse(localStorage.getItem(config.localStoragePublicKeys)) || null,
             privateKeys: JSON.parse(localStorage.getItem(config.localStoragePrivateKeys)) || null,
             nickname: localStorage.getItem(config.localStorageNickname) || null,
-            users: new UserList()
+            users: new UserList(),
+            balance: new Backbone.Model()
         }
     }
     getPrivateKeys() {
@@ -41,7 +42,7 @@ class Store {
         return this.store.nickname;
     }
     clear() {
-        this.store = {users: new UserList()};
+        this.store = {users: new UserList(), balance: new Backbone.Model()};
         localStorage.clear();
     }
     saveKeys() {
@@ -100,7 +101,7 @@ class Store {
         let self = this;
         return eosController.getBalance(this.store.nickname).then(data => {
             console.log(data)
-            self.store.balance = data
+            self.store.balance.set({amount: data[0]})
         })
     }
     startPolling() {

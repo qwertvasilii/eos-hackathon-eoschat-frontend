@@ -12,11 +12,20 @@ export default Marionette.Object.extend({
     },
     showRoot: function(){
         if (this.loggedIn()) {
-            // store.loadData().then(() => {
+            store.loadData().then(() => {
                 store.startPolling();
                 let app = this.options.app;
                 app.showRoot();
-            // })
+            })
+        }
+    },
+    showTransactions: function() {
+        if (this.loggedIn()) {
+            store.loadData().then(() => {
+                store.startPolling();
+                let app = this.options.app;
+                app.showTransactions();
+            })
         }
     },
     showLogin: function(){

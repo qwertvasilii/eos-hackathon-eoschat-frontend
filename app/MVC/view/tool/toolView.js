@@ -4,7 +4,7 @@ import workshop from '../../controller/appWorkshop';
 
 export default Marionette.View.extend({
     template: template,
-    className: 'col-md-9',
+    className: 'col-md-9 input-group',
     attributes: {
         id: 'tool'
     },
