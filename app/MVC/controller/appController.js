@@ -2,6 +2,7 @@ import Marionette from 'backbone.marionette';
 import App from './App';
 import workshop from './appWorkshop';
 import Backbone from 'backbone';
+import store from './appStore';
 
 export default Marionette.Object.extend({
     initialize: function(){
@@ -11,8 +12,11 @@ export default Marionette.Object.extend({
     },
     showRoot: function(){
         if (this.loggedIn()) {
-            let app = this.options.app;
-            app.showRoot();
+            // store.loadData().then(() => {
+                store.startPolling();
+                let app = this.options.app;
+                app.showRoot();
+            // })
         }
     },
     showLogin: function(){
