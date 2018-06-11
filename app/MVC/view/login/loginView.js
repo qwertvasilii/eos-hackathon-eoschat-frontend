@@ -17,7 +17,11 @@ export default Marionette.View.extend({
         platformName: config.platformName
     },
     events: {
-        'click #login-btn' : 'login'
+        'click #login-btn' : 'login',
+        'keyup #nickname-input': 'keyup'
+    },
+    keyup: function(e){
+        if (e.keyCode === 13) this.login()
     },
     login: function(){
         let self = this;
@@ -27,7 +31,7 @@ export default Marionette.View.extend({
             this.$('#login-btn').addClass('disabled').html('Sign in <i class="fa fa-spinner fa-pulse"></i>')
             setTimeout(() => { //bycicle to prevent eosjs to freeze screen
                 workshop.signUp(nickname).then(result => {
-                    if (!result.success) throw 'Error occures';
+                    if (!result.success) throw 'Invalid name or this nickname already exists';
                     return workshop.contractSignUp();
                 }).then(() => {
                     Backbone.history.navigate('/', {trigger: true});

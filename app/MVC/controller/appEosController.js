@@ -99,11 +99,15 @@ export default {
           });
     },
     sendMessage: (privateKey, message, sender, receiver, encrypt) => {
+        
+        
         const eosPrivate = Eos({
             keyProvider: privateKey,
             httpEndpoint: url
         })
-        if (encrypt) message = encryptMessage(JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + receiver)).sessionKey, message);
+        if (encrypt) {
+            message = encryptMessage(JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + receiver)).sessionKey, message);
+        }
         return eosPrivate.transaction({
             actions: [
                 {

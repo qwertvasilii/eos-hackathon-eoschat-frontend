@@ -17,14 +17,16 @@ export default Marionette.CollectionView.extend({
     onRender: function(){
         this.scroll();
         let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
-        let count = 0;
-        if (state.send) count++;
-        if (state.received) count++;
-        for (let i = 0; i < count; i++) {
-            let msg = this.collection.at(i);
-            if (msg) {
-                msg.set('skip', true)
-                this.collection.remove(msg);
+        if (state) {
+            let count = 0;
+            if (state.send) count++;
+            if (state.received) count++;
+            for (let i = 0; i < count; i++) {
+                let msg = this.collection.at(i);
+                if (msg) {
+                    msg.set('skip', true)
+                    this.collection.remove(msg);
+                }
             }
         }
     },

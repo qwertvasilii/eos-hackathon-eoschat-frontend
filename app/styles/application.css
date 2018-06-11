@@ -1,5 +1,9 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
+#nickname-input {
+    margin-top: 10px;
+}
+
 body {
     background: rgb(24,39,77);
     color: rgb(131, 152,199);

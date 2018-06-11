@@ -22,10 +22,18 @@ export default Marionette.View.extend({
         else {
             try {
                 let decoded = workshop.decryptMessage(this.model.get('message'))
-                this.$('.message').html(decoded)
+                this.$('.message').html(this.escapeHtml(decoded))
             } catch(e) {
                 this.remove();
             }
         }
-    }
+    },
+    escapeHtml(unsafe) {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+     }
 })

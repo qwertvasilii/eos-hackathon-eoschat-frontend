@@ -42,7 +42,6 @@ export default {
     },
     loadMessages: (userList) => {
         return eosController.loadMessages(store.getNickname()).then(data => {
-            console.log(data);
         })
     },
     getChatKeys: (nickname) => {
@@ -55,7 +54,8 @@ export default {
         return eosController.transfer(store.getPrivateKeys().active, amount, store.getNickname(), localStorage.getItem('selected-chat-user'));
     },
     decryptMessage: (message) => {
-        return decryptMessage(JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user'))).sessionKey, message)
+        let msg = decryptMessage(JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user'))).sessionKey, message)
+        return msg;
     },
     checkKeys: (user) => {
         return new Promise((resolve, reject) => {
@@ -89,7 +89,7 @@ export default {
                    }).catch(err => {
                        reject(err);
                    })
-               } else {
+               } else if (!keys.send) {
                    let pubKey;
                     eosController.getAccount(user.get('account_name')).then(data => {
                         pubKey = data.permissions[0].required_auth.keys[0].key;
@@ -107,6 +107,8 @@ export default {
                     }).catch(err => {
                         reject(err);
                     })
+               } else {
+                   resolve();
                }
             } else {
                 resolve();

@@ -12,7 +12,6 @@ const encryptSessionKey = function(A_priv, B_pub, sessionKey) {
 };
 
 const decryptSessionKey = function(B_priv, A_pub, cipher) {
-  console.log(B_priv, A_pub, cipher)
   const dec = ecc.Aes.decrypt(
     B_priv,
     A_pub,
