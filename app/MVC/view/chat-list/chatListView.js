@@ -8,7 +8,14 @@ export default Marionette.CollectionView.extend({
     attributes: {
         id: 'chat-box'
     },
+    onChildviewChatScroll: function(){
+        this.scroll();
+    },
+    scroll: function(){
+        this.$el.scrollTop(this.$el.prop('scrollHeight'))
+    },
     onRender: function(){
+        this.scroll();
         let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
         let count = 0;
         if (state.send) count++;
@@ -22,7 +29,6 @@ export default Marionette.CollectionView.extend({
         }
     },
     onAttach: function(){
-        // this.$el.scrollTop(this.$el.prop('scrollHeight'))
         this.$el.animate({
             scrollTop: this.$el.prop('scrollHeight')
         }, 700)

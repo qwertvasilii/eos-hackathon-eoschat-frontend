@@ -26,6 +26,7 @@ export default Marionette.View.extend({
     onChildviewChatSelected: function(model) {
         localStorage.setItem('selected-chat-user', model.get('account_name'));
         let self = this;
+        $('#tool').css('display','none');
         workshop.checkKeys(model).then(() => {
             self.showChildView('chatBox', new ChatListView({collection: model.get('messages')}));
         })

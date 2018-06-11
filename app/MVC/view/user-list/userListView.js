@@ -16,5 +16,5 @@ export default Marionette.CollectionView.extend({
         })
         view.select();
         this.trigger('chat:selected', view.model);
-    }
+    },
 })

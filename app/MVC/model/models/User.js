@@ -5,5 +5,8 @@ export default Backbone.Model.extend({
     initialize: function(){
         this.attributes.messages = new ChatList();
     },
-    idAttribute: "account_name"
+    idAttribute: "account_name",
+    defaults: {
+        "new_msg":  0,
+    }
 })

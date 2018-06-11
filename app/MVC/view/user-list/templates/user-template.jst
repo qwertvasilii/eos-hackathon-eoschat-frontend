@@ -4,4 +4,7 @@
     <div>
         <%= username %>
     </div>
+    <% if (new_msg > 0) { %>
+        <span class="badge badge-danger"><%= new_msg %></span>
+    <% } %>
 </div>

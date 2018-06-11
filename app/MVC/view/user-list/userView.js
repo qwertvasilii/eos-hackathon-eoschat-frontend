@@ -16,5 +16,8 @@ export default Marionette.View.extend({
     },
     select: function() {
         this.$el.addClass('selected');
+    },
+    initialize: function(){
+        this.model.on('change', this.render, this);
     }
 })

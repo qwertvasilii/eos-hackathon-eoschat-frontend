@@ -12,6 +12,14 @@ export default Marionette.View.extend({
         'click #main' : 'main',
         'click #transactions' : 'transactions'
     },
+    initialize: function(){
+        store.store.numbers.on('change', this.render, this);
+    },
+    templateContext: function(){
+        return {
+            new_msg: store.store.numbers.get('new_msg') || 0
+        }
+    },
     logout: function(){
         store.clear();
         Backbone.history.navigate('/login', {trigger : true});

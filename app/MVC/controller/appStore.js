@@ -17,6 +17,7 @@ class Store {
             nickname: localStorage.getItem(config.localStorageNickname) || null,
             users: new UserList(),
             balance: new Backbone.Model(),
+            numbers: new Backbone.Model(),
             transactions: new TransactionList()
         }
     }
@@ -44,7 +45,7 @@ class Store {
         return this.store.nickname;
     }
     clear() {
-        this.store = {users: new UserList(), balance: new Backbone.Model(), transactions: new TransactionList()};
+        this.store = {users: new UserList(), balance: new Backbone.Model(), transactions: new TransactionList(), numbers: new Backbone.Model()};
         localStorage.clear();
     }
     saveKeys() {
@@ -72,6 +73,7 @@ class Store {
     loadMessages() {
         let self = this;
         return eosController.loadMessages().then(data => {
+            let totalMsg = 0;
             self.store.users.forEach(_user => {
                 let msgs =_.filter(data, _msg => {
                     return (_msg.from === _user.get('account_name') && _msg.to === self.getNickname()) || (_msg.from === self.getNickname() && _msg.to === _user.get('account_name'))
@@ -79,6 +81,23 @@ class Store {
                 msgs = _.sortBy(msgs, 'seq');
                 
                 _user.get('messages').add(msgs, {merge: true})
+                if (_user.get('messages').length > 0) {
+                    if (_user.get('messages').at(_user.get('messages').length - 1).get('from') !== self.getNickname()) {
+                        let num = _user.get('messages').length - 1;
+                        let checkMsg = _user.get('messages').at(num);
+                        let numOfNew = 0;
+                        while (checkMsg.get('from') !== self.getNickname() && num > 0) {
+                            numOfNew++;
+                            num--;
+                            checkMsg = _user.get('messages').at(num);
+                        }
+                        _user.set('new_msg', numOfNew);
+                        totalMsg += numOfNew;
+                    } else {
+                        _user.set('new_msg', 0);
+                    }
+                } 
+                self.store.numbers.set('new_msg', totalMsg);
             })
         })
     }

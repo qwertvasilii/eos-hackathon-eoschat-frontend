@@ -10,12 +10,14 @@ export default Marionette.View.extend({
         // this.model.on('change', this.render, this);
     },
     onRender: function(){
+        $('#tool').css('display','flex');
         if (this.model.get('from') === store.getNickname()) {
             this.$('.message').addClass('offset-md-7');
         }
        
     },
     onAttach: function(){
+        this.trigger('chat:scroll');
         if (this.model.get('skip')) this.remove();
         else {
             try {
@@ -25,5 +27,5 @@ export default Marionette.View.extend({
                 this.remove();
             }
         }
-    },
+    }
 })
