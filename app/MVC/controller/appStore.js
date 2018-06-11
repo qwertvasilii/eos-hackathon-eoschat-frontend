@@ -79,7 +79,18 @@ class Store {
                     return (_msg.from === _user.get('account_name') && _msg.to === self.getNickname()) || (_msg.from === self.getNickname() && _msg.to === _user.get('account_name'))
                 })
                 msgs = _.sortBy(msgs, 'seq');
-                
+                let myMessages = _.sortBy(_user.get('messages').filter(_msg => {
+                    return _msg.get('from') === self.getNickname();
+                }),'seq');
+                let foreignMessages = _.sortBy(_user.get('messages').filter(_msg => {
+                    return _msg.get('from') === _user.get('account_name');
+                }),'seq');
+                let firstServiceMsg = -1;
+                let secondServiceMsg = -1;
+                if (myMessages.length > 0)
+                    firstServiceMsg = myMessages[0].get('seq');
+                if (foreignMessages.length > 0)
+                    secondServiceMsg = foreignMessages[0].get('seq');
                 _user.get('messages').add(msgs, {merge: true})
                 if (_user.get('messages').length > 0) {
                     if (_user.get('messages').at(_user.get('messages').length - 1).get('from') !== self.getNickname()) {
@@ -87,7 +98,8 @@ class Store {
                         let checkMsg = _user.get('messages').at(num);
                         let numOfNew = 0;
                         while (checkMsg.get('from') !== self.getNickname() && num > 0) {
-                            numOfNew++;
+                            if (checkMsg.get('seq') !== firstServiceMsg && checkMsg.get('seq') !== secondServiceMsg)
+                                numOfNew++;
                             num--;
                             checkMsg = _user.get('messages').at(num);
                         }
