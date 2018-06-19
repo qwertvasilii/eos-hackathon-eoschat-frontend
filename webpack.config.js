@@ -95,7 +95,9 @@ const webpackCommon = {
     // }]),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      _: 'underscore'
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+      _: 'underscore',
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

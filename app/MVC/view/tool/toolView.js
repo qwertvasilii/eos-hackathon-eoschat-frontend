@@ -20,13 +20,15 @@ export default Marionette.View.extend({
     sendMsg: function(){
         let self = this;
         let msg = this.$('#msg-input').val();
-        $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
-        this.disable();
-        workshop.sendMessage(msg).then(() => {
-            $('#loading-place').html('');
-            self.$('#msg-input').val('');
-            self.enable();
-        })
+        if (msg) {
+            $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
+            this.disable();
+            workshop.sendMessage(msg).then(() => {
+                $('#loading-place').html('');
+                self.$('#msg-input').val('');
+                self.enable();
+            })
+        }
     },
     triggers: {
         'click #transfer' : 'transfer:click'

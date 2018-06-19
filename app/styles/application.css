@@ -4,6 +4,15 @@
     margin-top: 10px;
 }
 
+input {
+    color: white !important;
+    background: rgb(24,39,77)!important;
+}
+
+input:focus {
+    background: rgb(24,39,77)!important;
+}
+
 body {
     background: rgb(24,39,77);
     color: rgb(131, 152,199);
@@ -171,4 +180,12 @@ body {
 
 #transfer {
     background-image: url('../img//eos-seeklogo.com.svg')
+}
+
+#currency-select {
+    background: rgb(19,47,100);
+    color: white;
+    border-color: rgb(36,70, 142);
+    height: 50px;
+    margin-top: 15px;
 }

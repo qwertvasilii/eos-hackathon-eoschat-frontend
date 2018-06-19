@@ -1,6 +1,7 @@
 import Marionette from 'backbone.marionette';
 import template from './templates/send-template.jst';
 import workshop from '../../controller/appWorkshop';
+require('bootstrap-hardskilled-extend-select')
 
 export default Marionette.View.extend({
     template: template,
@@ -11,6 +12,11 @@ export default Marionette.View.extend({
     events: {
         'click #close-send' : 'close',
         'click #send' : 'send'
+    },
+    onRender: function(){
+        // console.log(selectpicker);
+        // this.$('.selectpicker').selectpicker();
+        $('select').extendSelect();
     },
     close: function(){
         this.remove();

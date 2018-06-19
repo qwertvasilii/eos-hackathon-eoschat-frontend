@@ -15,6 +15,7 @@ class Store {
             publicKeys: JSON.parse(localStorage.getItem(config.localStoragePublicKeys)) || null,
             privateKeys: JSON.parse(localStorage.getItem(config.localStoragePrivateKeys)) || null,
             nickname: localStorage.getItem(config.localStorageNickname) || null,
+            mnemonic: localStorage.getItem(config.localStorageMnemonic) || null,
             users: new UserList(),
             balance: new Backbone.Model(),
             numbers: new Backbone.Model(),
@@ -30,10 +31,11 @@ class Store {
     getMasterKey() {
         return this.store.masterKey;
     }
-    setKeys(keys) {
+    setKeys(keys, mnemonic) {
         this.store.masterKey = keys.masterPrivateKey;
         this.store.publicKeys = keys.publicKeys;
         this.store.privateKeys = keys.privateKeys;
+        this.store.mnemonic = mnemonic;
     }
     setNickname(nickname) {
         this.store.nickname = nickname;
@@ -52,9 +54,17 @@ class Store {
         localStorage.setItem(config.localStorageMasterPrivateKey, this.store.masterKey);
         localStorage.setItem(config.localStoragePrivateKeys, JSON.stringify(this.store.privateKeys));
         localStorage.setItem(config.localStoragePublicKeys, JSON.stringify(this.store.publicKeys));
+        localStorage.setItem(config.localStorageMnemonic, this.store.mnemonic);
     }
     generateKeys() {
         let self = this;
+        // let mnemonic = eosController.generateMnemonic();
+        // console.log(mnemonic);
+        // let seed = eosController.makeMasterPrivateFromMnemonic(mnemonic);
+        // return eosController.generateKeysFromMnemonic(seed).then(keys => {
+        //     self.setKeys(keys, mnemonic);
+        //     return;
+        // })
         return eosController.generateKeys().then(keys => {
             self.setKeys(keys);
             return;

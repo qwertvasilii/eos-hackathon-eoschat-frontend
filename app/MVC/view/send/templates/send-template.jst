@@ -3,17 +3,11 @@
 </div>
 <div class="row justify-content-md-center">
     <div class="col-md-3">
-        <div class="dropdown" style="height: 50px; margin-top: 15px;">
-                <a style="height: 50px; padding-top: 10px;"class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Choose crypto
-                </a>
-                
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">EOS</a>
-                    <a class="dropdown-item" href="#">Ether</a>
-                    <a class="dropdown-item" href="#">Bitcoin</a>
-                </div>
-                </div>
+        <select class="form-control" id="currency-select">
+            <option selected>EOS</option>
+            <option disabled>Bitcoin</option>
+            <option disabled>Ether</option>
+        </select>
     </div>
     <div class="col-md-3">
         <input type="text" class="form-control input" placeholder="Enter amount" id="amount-input">
@@ -21,7 +15,7 @@
 </div>
 <div class="row justify-content-md-center" id="send-button-row">
     <div class="col-md-3">
-        <button class="btn btn-lg btn-primary btn-block" type="button" id="close-send">Close</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" id="close-send">Cancel</button>
     </div>
     <div class="col-md-3">
         <button class="btn btn-lg btn-primary btn-block" type="button" id="send">Send</button>

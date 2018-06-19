@@ -11,6 +11,7 @@ module.exports = {
     localStoragePrivateKeys: kebabPlatfromName + '-private-keys',
     localStorageNickname: kebabPlatfromName + '-nickname',
     localStorageChatKeysPrefix: kebabPlatfromName + '-chat-',
+    localStorageMnemonic: kebabPlatfromName + '-mnemonic',
 
     //api
     nodeProtocol: 'http://',

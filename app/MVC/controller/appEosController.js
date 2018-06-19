@@ -2,6 +2,8 @@ import {Keystore, Keygen} from '../../utils/eosjs-keygen';
 import Eos from '../../utils/eos';
 import config from './appConfig';
 import { generateSessionKey, encryptMessage } from '../../utils/crypto';
+import { generateMnemonic, mnemonicToSeedHex } from 'bip39';
+import { seedPrivate, sign } from '../../utils/eosjs-ecc';
 
 
 const url = config.nodeProtocol + config.nodeUrl;
@@ -10,6 +12,15 @@ const eos = Eos({
     httpEndpoint: url
 })
 export default {
+    generateMnemonic: () => {
+        return generateMnemonic();
+    },
+    makeMasterPrivateFromMnemonic: (mnemonic) => {
+        return 'PW' + seedPrivate(mnemonicToSeedHex(mnemonic))
+    }, 
+    generateKeysFromMnemonic: (seed) => {
+        return Keygen.generateMasterKeys(seed)
+    },
     generateKeys: () => {
         return Keygen.generateMasterKeys();
     },
