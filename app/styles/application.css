@@ -1,5 +1,26 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
+a {
+    color: rgb(131, 152,199);
+}
+
+#mnemonic-disclaimer {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#mnemonic-phrase {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+a:visited {
+    color: rgb(131, 152,199);
+}
+
+#header-row {
+    margin-left: 10px;
+}
+
 #nickname-input {
     margin-top: 10px;
 }
@@ -22,7 +43,13 @@ body {
 }
 
 .btn {
+    color: white;
     background: rgb(24,39,77);
+    border-color: rgb(36,70, 142);
+}
+
+.btn:hover {
+    background: rgb(193,82,156);
 }
 
 .footer {
@@ -188,4 +215,18 @@ body {
     border-color: rgb(36,70, 142);
     height: 50px;
     margin-top: 15px;
+}
+
+.seed-block {
+    margin-top: 25px;
+}
+
+#seedphrase-input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#seedphrase-login-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

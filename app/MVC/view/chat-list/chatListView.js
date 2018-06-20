@@ -8,6 +8,19 @@ export default Marionette.CollectionView.extend({
     attributes: {
         id: 'chat-box'
     },
+    initialize: function(){
+        this.collection.on('add', this.added, this);
+    },
+    added: function(){
+        if (this.waitingHandshake) {
+        let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
+            if (state && state.sessionKey) {
+                this.waitingHandshake = false;
+                this.render();
+            }
+        }
+        
+    },
     onChildviewChatScroll: function(){
         this.scroll();
     },
@@ -15,18 +28,26 @@ export default Marionette.CollectionView.extend({
         this.$el.scrollTop(this.$el.prop('scrollHeight'))
     },
     onRender: function(){
+        console.log('render');
         this.scroll();
         let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
+        console.log(this.collection)
         if (state) {
-            let count = 0;
-            if (state.send) count++;
-            if (state.received) count++;
-            for (let i = 0; i < count; i++) {
-                let msg = this.collection.at(i);
-                if (msg) {
-                    msg.set('skip', true)
-                    this.collection.remove(msg);
+            console.log(state)
+            if (state.sessionKey) {
+                let count = 0;
+                if (state.send) count++;
+                if (state.received) count++;
+                for (let i = 0; i < count; i++) {
+                    let msg = this.collection.at(i);
+                    if (msg) {
+                        msg.set('skip', true)
+                        this.collection.remove(msg);
+                    }
                 }
+            } else {
+                this.waitingHandshake = true;
+                this.$el.html('Waiting for handshake');
             }
         }
     },

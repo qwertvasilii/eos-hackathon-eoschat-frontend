@@ -31,6 +31,10 @@ class Store {
     getMasterKey() {
         return this.store.masterKey;
     }
+    mnemonicSaved() {
+        this.store.mnemonic = null;
+        localStorage.removeItem(config.localStorageMnemonic);
+    }
     setKeys(keys, mnemonic) {
         this.store.masterKey = keys.masterPrivateKey;
         this.store.publicKeys = keys.publicKeys;
@@ -46,6 +50,9 @@ class Store {
     getNickname() {
         return this.store.nickname;
     }
+    getMnemonic() {
+        return this.store.mnemonic;
+    }
     clear() {
         this.store = {users: new UserList(), balance: new Backbone.Model(), transactions: new TransactionList(), numbers: new Backbone.Model()};
         localStorage.clear();
@@ -54,20 +61,53 @@ class Store {
         localStorage.setItem(config.localStorageMasterPrivateKey, this.store.masterKey);
         localStorage.setItem(config.localStoragePrivateKeys, JSON.stringify(this.store.privateKeys));
         localStorage.setItem(config.localStoragePublicKeys, JSON.stringify(this.store.publicKeys));
-        localStorage.setItem(config.localStorageMnemonic, this.store.mnemonic);
+        if (this.store.mnemonic) {
+            localStorage.setItem(config.localStorageMnemonic, this.store.mnemonic);
+        }
     }
     generateKeys() {
         let self = this;
-        // let mnemonic = eosController.generateMnemonic();
-        // console.log(mnemonic);
-        // let seed = eosController.makeMasterPrivateFromMnemonic(mnemonic);
-        // return eosController.generateKeysFromMnemonic(seed).then(keys => {
-        //     self.setKeys(keys, mnemonic);
+        let mnemonic = eosController.generateMnemonic();
+        console.log(mnemonic);
+        let seed = eosController.makeMasterPrivateFromMnemonic(mnemonic);
+        return eosController.generateKeysFromMnemonic(seed).then(keys => {
+            self.setKeys(keys, mnemonic);
+            return; 
+        })
+        // return eosController.generateKeys().then(keys => {
+        //     self.setKeys(keys);
         //     return;
         // })
-        return eosController.generateKeys().then(keys => {
+    }
+    generateKeysFromMnemonic(mnemonic) {
+        let self = this;
+        let seed = eosController.makeMasterPrivateFromMnemonic(mnemonic);
+        let names;
+        return eosController.generateKeysFromMnemonic(seed).then(keys => {
             self.setKeys(keys);
-            return;
+            return eosController.getByPubKey(this.store.publicKeys.active);
+        }).then(_names => {
+            names = _names;
+            return self.loadUsers();
+        }).then(() => {
+            let users = self.getUsers();
+            if (names.length > 0) {
+                let nickname;
+                _.forEach(names, name => {
+                    users.forEach(user => {
+                        if (user.get('account_name') === name) nickname = name;
+                    })
+                })
+                if (!nickname) return {success: false, err: 'soon'};
+                else {
+                    self.setNickname(nickname);
+                    self.saveNickname();
+                    self.saveKeys();
+                    return {success: true}
+                }
+            } else {
+                return {success: false, err: 'soon'};
+            }
         })
     }
     getUsers() {

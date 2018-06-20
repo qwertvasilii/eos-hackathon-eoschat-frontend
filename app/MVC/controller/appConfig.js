@@ -15,9 +15,9 @@ module.exports = {
 
     //api
     nodeProtocol: 'http://',
-    nodeUrl: '89.223.88.56/nodeapi',
+    nodeUrl: '18.219.50.252/nodeapi',
     serverProtocol: 'http://',
-    serverUrl: '89.223.88.56',
+    serverUrl: '18.219.50.252',
     serverPort: '3000',
     serverRegistrationPath: '/signup/',
 

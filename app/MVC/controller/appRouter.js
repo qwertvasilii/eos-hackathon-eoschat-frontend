@@ -8,6 +8,7 @@ export default Marionette.AppRouter.extend({
     appRoutes: {
         '(/)' : 'showRoot',
         'login(/)' : 'showLogin',
-        'transactions(/)' : 'showTransactions'
+        'transactions(/)' : 'showTransactions',
+        'mnemonic(/)': 'showMnemonic'
     }
 })

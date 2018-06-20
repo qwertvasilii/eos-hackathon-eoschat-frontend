@@ -36,6 +36,11 @@ export default {
             memo: ""
           });
     },
+    getByPubKey: (pubKey) => {
+        return eos.getKeyAccounts(pubKey).then(names => {
+            return names.account_names;
+        })
+    },
     contractSignUp: (nickname, privateKey) => {
         const eosPrivate = Eos({
             keyProvider: privateKey,

@@ -2,6 +2,7 @@ import Marionette from 'backbone.marionette';
 import LoginView from '../view/login/loginView';
 import rootView from '../view/root/rootView';
 import transactionRootView from '../view/transactionRoot/transactionRootView';
+import mnemonicRootView from '../view/mnemonicRoot/mnemonicRootView';
 
 export default Marionette.Application.extend({
     region: '#app',
@@ -13,5 +14,8 @@ export default Marionette.Application.extend({
     },
     showTransactions: function(){
         this.showView(new transactionRootView())
+    },
+    showMnemonic: function(){
+        this.showView(new mnemonicRootView());
     }
 })

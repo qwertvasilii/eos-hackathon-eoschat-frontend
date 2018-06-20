@@ -18,7 +18,8 @@ export default Marionette.View.extend({
     },
     events: {
         'click #login-btn' : 'login',
-        'keyup #nickname-input': 'keyup'
+        'keyup #nickname-input': 'keyup',
+        'click #seedphrase-login-btn' : 'signIn'
     },
     keyup: function(e){
         if (e.keyCode === 13) this.login()
@@ -42,6 +43,22 @@ export default Marionette.View.extend({
             }, 100);
         } else {
             this.$('#helper').html('Enter your username');
+        }
+    },
+    signIn: function(){
+        let self = this;
+        let seedphrase = this.$('#seedphrase-input').val();
+        this.$('#seed-helper').html('');
+        if (seedphrase) {
+            workshop.signIn(seedphrase).then(result => {
+                if (result.success) {
+                    Backbone.history.navigate('/', {trigger: true})
+                } else {
+                    this.$('#seed-helper').html("Wrong seddphrase or user doesn't exists");        
+                }
+            })
+        } else {
+            this.$('#seed-helper').html('Enter your seedphrase');
         }
     }
 })
