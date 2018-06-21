@@ -26,7 +26,8 @@
 }
 
 #loader {
-    z-index: 5000;
+    z-index: 125000;
+    width: 125px;
 }
 
 a {
