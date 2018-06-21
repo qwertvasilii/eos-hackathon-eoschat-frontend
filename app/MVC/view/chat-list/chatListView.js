@@ -33,6 +33,7 @@ export default Marionette.CollectionView.extend({
         this.$el.scrollTop(this.$el.prop('scrollHeight'))
     },
     onRender: function(){
+        console.log(this.collection);
         this.scroll();
         let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
         if (state) {
@@ -56,6 +57,7 @@ export default Marionette.CollectionView.extend({
         }
     },
     onAttach: function(){
+        $('#tool').css('display','flex');
         this.$el.animate({
             scrollTop: this.$el.prop('scrollHeight')
         }, 700)

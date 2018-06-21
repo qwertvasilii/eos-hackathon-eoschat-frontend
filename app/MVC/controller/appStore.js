@@ -12,6 +12,7 @@ import loadingView from '../view/loading/loadingView';
 class Store {
     constructor() {
         this.store = {
+            firstLoaded: false,
             masterKey: localStorage.getItem(config.localStorageMasterPrivateKey) || null,
             publicKeys: JSON.parse(localStorage.getItem(config.localStoragePublicKeys)) || null,
             privateKeys: JSON.parse(localStorage.getItem(config.localStoragePrivateKeys)) || null,
@@ -22,6 +23,14 @@ class Store {
             numbers: new Backbone.Model(),
             transactions: new TransactionList()
         }
+    }
+    firstLoaded() {
+        return this.store.firstLoaded;
+    }
+    loadFirst() {
+        return this.loadData().then(() => {
+            this.store.firstLoaded = true;
+        })
     }
     getPrivateKeys() {
         return this.store.privateKeys;
@@ -166,7 +175,6 @@ class Store {
     }
     loadData() {
         let self = this;
-        new loadingView().render();
         return this.loadUsers().then(() => {
             return self.loadMessages();
         }).then(() => {

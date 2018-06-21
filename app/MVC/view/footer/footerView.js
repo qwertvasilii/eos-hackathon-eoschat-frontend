@@ -3,6 +3,7 @@ import template from './templates/footer-template.jst';
 import menuView from '../../view/menu/menuView';
 import toolView from '../tool/toolView';
 import sendView from '../send/sendView';
+import escrowView from '../escrow/escrowView';
 import './templates/footer.css';
 
 export default Marionette.View.extend({
@@ -17,8 +18,8 @@ export default Marionette.View.extend({
             el: '.tool',
             replaceElement: true
         },
-        send: {
-            el: '.send',
+        modal: {
+            el: '.for-modal',
         }
     },
     onRender: function(){
@@ -26,12 +27,15 @@ export default Marionette.View.extend({
         this.showChildView('tool', new toolView());
     },
     onChildviewTransferClick: function(){
-        this.showChildView('send', new sendView());
+        this.showChildView('modal', new sendView());
     },
     blockInput: function(){
         this.getChildView('tool').block();
     },
     unblockInput: function(){
         this.getChildView('tool').unblock();
+    },
+    onChildviewEscrowClick: function(){
+        this.showChildView('modal', new escrowView());
     }
 })

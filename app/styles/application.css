@@ -1,26 +1,32 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
 #fade {
+    display: none;
     position:absolute;
     top: 0%;
     left: 0%;
     width: 100%;
     height: 100%;
     background-color: #ababab;
-    z-index: 2040;
+    z-index: 10040;
     -moz-opacity: 0.8;
     opacity: .70;
     filter: alpha(opacity=80);
     position: fixed;
 }
 #modal {
+    display: none;
     position: absolute;
     top: 45%;
     left: 45%;
     padding:30px 15px 0px;
-    z-index: 2000;
+    z-index: 10000;
     text-align:center;
     overflow: auto;
+}
+
+#loader {
+    z-index: 5000;
 }
 
 a {
@@ -233,10 +239,6 @@ body, html {
     height: 2.5em;
 }
 
-#transfer {
-    background-image: url('../img//eos-seeklogo.com.svg')
-}
-
 #currency-select {
     background: rgb(19,47,100);
     color: white;
@@ -257,4 +259,15 @@ body, html {
 #seedphrase-login-btn {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#escrow-div {
+    position: absolute;
+    top: 20%;
+    width: 800px;
+    height: 300px;
+    background: rgb(19,47,100);
+    left: 30%;
+    z-index: 9999;
+    padding-top: 25px;
 }

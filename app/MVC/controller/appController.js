@@ -10,24 +10,31 @@ export default Marionette.Object.extend({
         app.start();
         this.options.app = app;
     },
+    loadData: function(){
+        return new Promise((resolve, reject) => {
+            if (store.firstLoaded()) resolve();
+            else {
+                Backbone.loading.show();
+                store.loadFirst().then(() => {
+                    store.startPolling();
+                    Backbone.loading.hide();
+                    resolve();
+                })
+            }
+        })
+    },
     showRoot: function(){
         if (this.loggedIn() && this.mnemonicSaved()) {
-            $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
-            store.loadData().then(() => {
-                store.startPolling();
+            this.loadData().then(() => {
                 let app = this.options.app;
-                $('#loading-place').html('');
                 app.showRoot();
             })
         }
     },
     showTransactions: function() {
         if (this.loggedIn() && this.mnemonicSaved()) {
-            $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
-            store.loadData().then(() => {
-                store.startPolling();
+            this.loadData().then(() => {
                 let app = this.options.app;
-                $('#loading-place').html('');
                 app.showTransactions();
             })
         }
@@ -45,11 +52,9 @@ export default Marionette.Object.extend({
             if (this.mnemonicSaved()) {
                 Backbone.history.navigate('/', {trigger: true});
             } else {
-                $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
-                store.loadData().then(() => {
+                this.loadData().then(() => {
                     let app = this.options.app;
                     app.showMnemonic();
-                    $('#loading-place').html('');
                 })
             }
         }

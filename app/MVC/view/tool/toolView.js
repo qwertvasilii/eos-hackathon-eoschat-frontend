@@ -1,7 +1,6 @@
 import Marionette from 'backbone.marionette';
 import template from './templates/tool-template.jst';
 import workshop from '../../controller/appWorkshop';
-import eos from '../../../img/eos-seeklogo.com.svg';
 
 export default Marionette.View.extend({
     template: template,
@@ -13,11 +12,6 @@ export default Marionette.View.extend({
     events: {
         'click #send-msg' : 'sendMsg',
         'keyup #msg-input' : 'keyup'
-    },
-    templateContext: {
-        eos: eos
-    },
-    initialize: function(){
     },
     unblock: function(){
         this.$('#msg-input').removeAttr('disabled');

@@ -10,7 +10,10 @@ export default Marionette.View.extend({
     events: {
         'click #logout' : 'logout',
         'click #main' : 'main',
-        'click #transactions' : 'transactions'
+        'click #transactions' : 'transactions',
+    },
+    triggers: {
+        'click #escrow' : 'escrow:click'
     },
     initialize: function(){
         store.store.numbers.on('change', this.render, this);

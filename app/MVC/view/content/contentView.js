@@ -26,9 +26,15 @@ export default Marionette.View.extend({
     onChildviewChatSelected: function(model) {
         localStorage.setItem('selected-chat-user', model.get('account_name'));
         let self = this;
-        $('#tool').css('display','none');
+        if (self.getChildView('chatBox')) this.getChildView('chatBox').$el.html('');
         workshop.checkKeys(model).then(function() {
-            self.showChildView('chatBox', new ChatListView({collection: model.get('messages'), user: model}));
+            if (self.getChildView('chatBox')) {
+                self.getChildView('chatBox').collection = model.get('messages');
+                self.getChildView('chatBox').options.user = model;
+                self.getChildView('chatBox').render();
+            } else {
+                self.showChildView('chatBox', new ChatListView({collection: model.get('messages'), user: model}));
+            }
         })
     },
     onChildviewUnblock: function(){

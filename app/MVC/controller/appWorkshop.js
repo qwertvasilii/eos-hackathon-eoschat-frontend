@@ -4,8 +4,8 @@ import config from './appConfig';
 import errorWrapper from './appErrorWrapper';
 import eosController from './appEosController';
 import { generateSessionKey, encryptSessionKey, decryptSessionKey, decryptMessage } from '../../utils/crypto';
-var Long = require('long')
 var Buffer = require('buffer/').Buffer
+
 
 const url = config.serverProtocol + config.serverUrl + ':' + config.serverPort;
 
@@ -61,7 +61,10 @@ export default {
         return eosController.sendMessage(store.getPrivateKeys().active, message, store.getNickname(), localStorage.getItem('selected-chat-user'), true);
     },
     transfer: (amount) => {
-        return eosController.transfer(store.getPrivateKeys().active, amount, store.getNickname(), localStorage.getItem('selected-chat-user'));
+        Backbone.loading.show();
+        return eosController.transfer(store.getPrivateKeys().active, amount, store.getNickname(), localStorage.getItem('selected-chat-user')).then(() => {
+            Backbone.loading.hide();
+        })
     },
     decryptMessage: (message) => {
         let msg = decryptMessage(JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user'))).sessionKey, message)
@@ -75,11 +78,11 @@ export default {
             if (!keys.received) {
                let messages = user.get('messages').filter(_msg => { return _msg.get('from') === user.get('account_name') })
                let myMessages = user.get('messages').filter(_msg => {return _msg.get('from') === store.getNickname()});
-               console.log(myMessages);
                if (messages.length > 0) {
                    let keyMessage = messages[0];
                    let cipher = JSON.parse(keyMessage.get('message'));
                    let pubKey;
+                   Backbone.loading.show();
                    eosController.getAccount(user.get('account_name')).then(data => {
                         pubKey = data.permissions[0].required_auth.keys[0].key;
                         cipher.message = Buffer.from(cipher.message, 'hex');
@@ -97,12 +100,14 @@ export default {
                    }).then(() => {
                         keys.received = true;
                         localStorage.setItem(config.localStorageChatKeysPrefix + user.get('account_name'), JSON.stringify(keys));
+                        Backbone.loading.hide();
                         resolve();
                    }).catch(err => {
                        reject(err);
                    })
                } else if (!keys.send && myMessages.length === 0 ){
                    let pubKey;
+                   Backbone.loading.show();
                     eosController.getAccount(user.get('account_name')).then(data => {
                         pubKey = data.permissions[0].required_auth.keys[0].key;
                         return generateSessionKey();
@@ -115,12 +120,12 @@ export default {
                     }).then(() => {
                         keys.send = true;
                         localStorage.setItem(config.localStorageChatKeysPrefix + user.get('account_name'), JSON.stringify(keys));
+                        Backbone.loading.hide();
                         resolve();
                     }).catch(err => {
                         reject(err);
                     })
                } else if (!keys.send && myMessages.length > 0) {
-                   console.log('im here');
                     keys.send = true;
                     localStorage.setItem(config.localStorageChatKeysPrefix + user.get('account_name'), JSON.stringify(keys));
                     resolve();
