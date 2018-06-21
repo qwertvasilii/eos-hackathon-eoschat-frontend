@@ -27,8 +27,14 @@ export default Marionette.View.extend({
         localStorage.setItem('selected-chat-user', model.get('account_name'));
         let self = this;
         $('#tool').css('display','none');
-        workshop.checkKeys(model).then(() => {
-            self.showChildView('chatBox', new ChatListView({collection: model.get('messages')}));
+        workshop.checkKeys(model).then(function() {
+            self.showChildView('chatBox', new ChatListView({collection: model.get('messages'), user: model}));
         })
+    },
+    onChildviewUnblock: function(){
+        this.trigger('unblock');
+    },
+    onChildviewBlock: function(){
+        this.trigger('block')
     }
 })

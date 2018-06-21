@@ -30,4 +30,10 @@ export default Marionette.View.extend({
         this.showChildView('header', new HeaderView());
         this.showChildView('content', new ContentView());
     },
+    onChildviewBlock: function(){
+        this.getChildView('footer').blockInput();
+    },
+    onChildviewUnblock: function(){
+        this.getChildView('footer').unblockInput();
+    }
 })

@@ -7,6 +7,7 @@ import _ from 'lodash';
 import { decryptSessionKey } from '../../utils/crypto';
 import workshop from './appWorkshop';
 import errrorWrapper from './appErrorWrapper';
+import loadingView from '../view/loading/loadingView';
 
 class Store {
     constructor() {
@@ -165,6 +166,7 @@ class Store {
     }
     loadData() {
         let self = this;
+        new loadingView().render();
         return this.loadUsers().then(() => {
             return self.loadMessages();
         }).then(() => {

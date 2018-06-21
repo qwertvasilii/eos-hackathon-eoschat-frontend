@@ -27,5 +27,11 @@ export default Marionette.View.extend({
     },
     onChildviewTransferClick: function(){
         this.showChildView('send', new sendView());
+    },
+    blockInput: function(){
+        this.getChildView('tool').block();
+    },
+    unblockInput: function(){
+        this.getChildView('tool').unblock();
     }
 })

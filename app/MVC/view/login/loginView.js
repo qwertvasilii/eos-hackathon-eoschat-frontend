@@ -29,7 +29,7 @@ export default Marionette.View.extend({
         let nickname = this.$('#nickname-input').val();
         this.$('#helper').html('');
         if (nickname) {
-            this.$('#login-btn').addClass('disabled').html('Sign in <i class="fa fa-spinner fa-pulse"></i>')
+            this.$('#login-btn').addClass('disabled').html('Sign up <i class="fa fa-spinner fa-pulse"></i>')
             setTimeout(() => { //bycicle to prevent eosjs to freeze screen
                 workshop.signUp(nickname).then(result => {
                     if (!result.success) throw 'Invalid name or this nickname already exists';
@@ -37,7 +37,7 @@ export default Marionette.View.extend({
                 }).then(() => {
                     Backbone.history.navigate('/', {trigger: true});
                 }).catch(err => {
-                    self.$('#login-btn').removeClass('disabled').html('Sign in')
+                    self.$('#login-btn').removeClass('disabled').html('Sign up')
                     self.$('#helper').html(err);
                 })
             }, 100);
@@ -50,12 +50,17 @@ export default Marionette.View.extend({
         let seedphrase = this.$('#seedphrase-input').val();
         this.$('#seed-helper').html('');
         if (seedphrase) {
+            this.$('#seedphrase-login-btn').addClass('disabled').html('Sign in <i class="fa fa-spinner fa-pulse"></i>')
             workshop.signIn(seedphrase).then(result => {
                 if (result.success) {
                     Backbone.history.navigate('/', {trigger: true})
                 } else {
-                    this.$('#seed-helper').html("Wrong seddphrase or user doesn't exists");        
+                    self.$('#seedphrase-login-btn').removeClass('disabled').html('Sign in')
+                    self.$('#seed-helper').html("Wrong seddphrase or user doesn't exists");        
                 }
+            }).catch(err => {
+                self.$('#seedphrase-login-btn').removeClass('disabled').html('Sign in')
+                self.$('#seed-helper').html(err);
             })
         } else {
             this.$('#seed-helper').html('Enter your seedphrase');

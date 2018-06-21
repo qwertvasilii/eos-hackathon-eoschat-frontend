@@ -17,6 +17,18 @@ export default Marionette.View.extend({
     templateContext: {
         eos: eos
     },
+    initialize: function(){
+    },
+    unblock: function(){
+        this.$('#msg-input').removeAttr('disabled');
+        this.$('#send-msg').removeAttr('disabled');
+        this.$('#transfer').removeAttr('disabled');
+    },
+    block: function(){
+        this.$('#msg-input').attr('disabled', 'true');
+        this.$('#send-msg').attr('disabled','true');
+        this.$('#transfer').attr('disabled', 'true');
+    },
     sendMsg: function(){
         let self = this;
         let msg = this.$('#msg-input').val();
@@ -39,11 +51,9 @@ export default Marionette.View.extend({
     disable: function(){
         this.$('#send-msg').addClass('disabled');
         this.$('#msg-input').attr('disabled',true);
-        this.$('#transfer').addClass('disabled');
     },
     enable: function(){
         this.$('#send-msg').removeClass('disabled');
         this.$('#msg-input').removeAttr('disabled');
-        this.$('#transfer').removeClass('disabled');
     }
 })

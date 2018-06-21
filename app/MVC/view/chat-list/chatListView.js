@@ -1,6 +1,7 @@
 import Marionette from 'backbone.marionette';
 import ChatView from './chatView';
 import config from '../../controller/appConfig';
+import workshop from '../../controller/appWorkshop';
 
 export default Marionette.CollectionView.extend({
     childView: ChatView,
@@ -13,10 +14,14 @@ export default Marionette.CollectionView.extend({
     },
     added: function(){
         if (this.waitingHandshake) {
-        let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
-            if (state && state.sessionKey) {
-                this.waitingHandshake = false;
-                this.render();
+            let self = this;
+            let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
+            if (state && !state.sessionKey) {
+                workshop.checkKeys(this.getOption('user')).then(function() {
+                    self.waitingHandshake = false;
+                    self.$el.html('');
+                    self.render();
+                })
             }
         }
         
@@ -28,13 +33,11 @@ export default Marionette.CollectionView.extend({
         this.$el.scrollTop(this.$el.prop('scrollHeight'))
     },
     onRender: function(){
-        console.log('render');
         this.scroll();
         let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
-        console.log(this.collection)
         if (state) {
-            console.log(state)
             if (state.sessionKey) {
+                this.trigger('unblock');
                 let count = 0;
                 if (state.send) count++;
                 if (state.received) count++;
@@ -48,6 +51,7 @@ export default Marionette.CollectionView.extend({
             } else {
                 this.waitingHandshake = true;
                 this.$el.html('Waiting for handshake');
+                this.trigger('block')
             }
         }
     },
