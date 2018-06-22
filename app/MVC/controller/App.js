@@ -10,9 +10,11 @@ export default Marionette.Application.extend({
         this.showView(new LoginView());
     },
     showRoot: function(){
+        localStorage.removeItem('selected-chat-user')
         this.showView(new rootView());
     },
     showTransactions: function(){
+        localStorage.removeItem('selected-chat-user')
         this.showView(new transactionRootView())
     },
     showMnemonic: function(){

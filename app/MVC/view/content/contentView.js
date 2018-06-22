@@ -24,18 +24,20 @@ export default Marionette.View.extend({
             self.showChildView('userList', new UserListView({collection: store.getUsers()}));
     },
     onChildviewChatSelected: function(model) {
-        localStorage.setItem('selected-chat-user', model.get('account_name'));
-        let self = this;
-        if (self.getChildView('chatBox')) this.getChildView('chatBox').$el.html('');
-        workshop.checkKeys(model).then(function() {
-            if (self.getChildView('chatBox')) {
-                self.getChildView('chatBox').collection = model.get('messages');
-                self.getChildView('chatBox').options.user = model;
-                self.getChildView('chatBox').render();
-            } else {
-                self.showChildView('chatBox', new ChatListView({collection: model.get('messages'), user: model}));
-            }
-        })
+        if (model.get('account_name') !== localStorage.getItem('selected-chat-user')) {
+            localStorage.setItem('selected-chat-user', model.get('account_name'));
+            let self = this;
+            if (self.getChildView('chatBox')) this.getChildView('chatBox').$el.html('');
+            workshop.checkKeys(model).then(function() {
+                if (self.getChildView('chatBox')) {
+                    self.getChildView('chatBox').collection = model.get('messages');
+                    self.getChildView('chatBox').options.user = model;
+                    self.getChildView('chatBox').render();
+                } else {
+                    self.showChildView('chatBox', new ChatListView({collection: model.get('messages'), user: model}));
+                }
+            })
+        }
     },
     onChildviewUnblock: function(){
         this.trigger('unblock');

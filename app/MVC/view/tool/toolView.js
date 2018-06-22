@@ -29,10 +29,11 @@ export default Marionette.View.extend({
         if (msg) {
             $('#loading-place').html('<i class="fa fa-spinner fa-pulse fa-2x"></i>');
             this.disable();
-            workshop.sendMessage(msg).then(() => {
+            workshop.sendMessage(msg).then(data => {
                 $('#loading-place').html('');
                 self.$('#msg-input').val('');
                 self.enable();
+                self.$('#msg-input').focus();
             })
         }
     },

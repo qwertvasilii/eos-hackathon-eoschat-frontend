@@ -11,6 +11,11 @@ export default Marionette.View.extend({
     triggers: {
         'click' : 'contact:select'
     },
+    onAttach: function(){
+        if (this.model.get('account_name') === localStorage.getItem('selected-chat-user')) {
+            this.select();
+        }
+    },
     removeSelected: function() {
         this.$el.removeClass('selected');
     },
