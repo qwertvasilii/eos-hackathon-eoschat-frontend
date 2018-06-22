@@ -88,12 +88,13 @@ body, html {
 }
 
 .footer {
-    height: 80px;
     background: rgb(24,39,77);
+    height: 80px;
 }
 
 #search-box {
     border-right : 1px solid rgb(36,70, 142);
+    border-bottom: 1px solid rgb(36,70, 142);
 }
 
 .input {
@@ -140,12 +141,14 @@ body, html {
     cursor: pointer;
 }
 
-#root {
-    height: 100vh;
+.menu {
+    border-right: 1px solid rgb(36,70, 142);
+    padding-top: 10px;
+    border-top: 1px solid rgb(36,70, 142);
 }
 
 .content {
-    height: calc(100vh - 160px - 10px - 2px);
+    height: calc(100vh - 160px - 20px - 2px);
     background: rgb(19,35,72);
 }
 
