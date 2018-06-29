@@ -82,6 +82,7 @@ export default {
                       let _msg = r.action_trace.act.data;
                       _msg.seq = r.global_action_seq;
                       _msg.time = r.block_time; 
+                      _msg.trx_id = r.action_trace.trx_id;
                     msgs.push(_msg);
                   }
                 }
@@ -142,6 +143,8 @@ export default {
                     }
                 }
             ]
+        }).then(data => {
+            return {message: message, trx_id: data.transaction_id}
         })
     },
     getAccount: (nickname) => {

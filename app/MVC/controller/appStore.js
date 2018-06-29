@@ -78,7 +78,6 @@ class Store {
     generateKeys() {
         let self = this;
         let mnemonic = eosController.generateMnemonic();
-        console.log(mnemonic);
         let seed = eosController.makeMasterPrivateFromMnemonic(mnemonic);
         return eosController.generateKeysFromMnemonic(seed).then(keys => {
             self.setKeys(keys, mnemonic);
@@ -129,6 +128,17 @@ class Store {
         return eosController.loadUsers().then(data => {
             self.store.users.add(_.filter(data.rows, _row => { return _row.account_name !== nick}), {merge: true});
         })
+    }
+    addPreMessage(msg) {
+        let user = this.store.users.find(_user => {
+            return _user.get('account_name') === msg.to
+        })
+        if (user) {
+            let messages = user.get('messages')
+            let lastMessage = messages.at(messages.length - 1)
+            let seq = lastMessage ? lastMessage.get('seq') : 1
+            messages.add({from: msg.from, to: msg.to, seq: ++seq, message: msg.message, trx_id: msg.trx_id})
+        }
     }
     loadMessages() {
         let self = this;

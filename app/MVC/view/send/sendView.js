@@ -23,7 +23,8 @@ export default Marionette.View.extend({
     send: function(){
         let amount = parseFloat(this.$('#amount-input').val());
         let self = this;
-        if (amount) {
+        const result = confirm('Confirm sending')
+        if (amount && result) {
             workshop.transfer(amount).then(data => {
                 self.remove();
             })

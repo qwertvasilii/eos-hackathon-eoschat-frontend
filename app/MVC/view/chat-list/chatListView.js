@@ -33,22 +33,11 @@ export default Marionette.CollectionView.extend({
         this.$el.scrollTop(this.$el.prop('scrollHeight'))
     },
     onRender: function(){
-        console.log(this.collection);
         this.scroll();
         let state = JSON.parse(localStorage.getItem(config.localStorageChatKeysPrefix + localStorage.getItem('selected-chat-user')));
         if (state) {
             if (state.sessionKey) {
                 this.trigger('unblock');
-                let count = 0;
-                if (state.send) count++;
-                if (state.received) count++;
-                for (let i = 0; i < count; i++) {
-                    let msg = this.collection.at(i);
-                    if (msg) {
-                        msg.set('skip', true)
-                        this.collection.remove(msg);
-                    }
-                }
             } else {
                 this.waitingHandshake = true;
                 this.$el.html('Waiting for handshake');

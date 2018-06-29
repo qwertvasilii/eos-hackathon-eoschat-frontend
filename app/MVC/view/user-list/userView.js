@@ -1,12 +1,16 @@
 import Marionette from 'backbone.marionette';
 import template from './templates/user-template.jst';
 import captain from '../../../img/captain.png';
+import Identicon from 'identicon.js';
+import md5 from 'md5'
 
 export default Marionette.View.extend({
     template: template,
     className: 'row user-contact',
-    templateContext: {
-        avatar: captain
+    templateContext: function(){
+        return {
+            avatar: new Identicon(md5(this.model.get('account_name'))).toString()
+        }
     },
     triggers: {
         'click' : 'contact:select'

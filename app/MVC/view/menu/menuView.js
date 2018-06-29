@@ -20,7 +20,8 @@ export default Marionette.View.extend({
     },
     templateContext: function(){
         return {
-            new_msg: store.store.numbers.get('new_msg') || 0
+            new_msg: store.store.numbers.get('new_msg') || 0,
+            active: Backbone.history.getFragment()
         }
     },
     logout: function(){

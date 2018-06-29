@@ -128,7 +128,7 @@ body, html {
 }
 
 .menu-item > i {
-    margin-top: 15px;
+    margin-top: auto;
 }
 
 .menu-item {
@@ -137,8 +137,12 @@ body, html {
 }
 
 .menu-item:hover {
-    color: rgb(193,82,156);
+    color: rgba(193,82,156,0.5);
     cursor: pointer;
+}
+
+.menu-item.active {
+    color: rgb(193,82,156)
 }
 
 .menu {
@@ -178,6 +182,10 @@ body, html {
     border-top: 1px solid rgb(36,70, 142);
     border-bottom: 1px solid rgb(36,70, 142);
     background: rgb(22,36,69);
+}
+
+.avatar {
+    margin: auto;
 }
 
 .avatar-circle {

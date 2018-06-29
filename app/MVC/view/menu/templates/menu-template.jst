@@ -1,17 +1,21 @@
 <div class="row">
-    <div class="col-md-3 menu-item" id="main">
+    <div class="col-md-3 menu-item <% if (!active) { %> active <% } %>" id="main">
         <i class="fa fa-comments fa-2x"></i>
+        Chats
         <% if (new_msg > 0) { %>
             <span class="badge badge-pill badge-danger"><%= new_msg %></span>
         <% } %>
     </div>
-    <div class="col-md-3 menu-item" id="transactions">
-        <i class="fa fa-exchange fa-2x"></i>
+    <div class="col-md-3 menu-item <% if (active === 'transactions') { %> active <% } %>" id="transactions">
+        <i class="fa fa-exchange fa-2x"></i><br>
+        Txs
     </div>
     <div class="col-md-3 menu-item" id="escrow">
         <i class="fa fa-handshake-o fa-2x"></i>
+        Esscrow
     </div>
     <div class="col-md-3 menu-item" id="logout">
-        <i class="fa fa-sign-out fa-2x"></i>
+        <i class="fa fa-sign-out fa-2x"></i><br>
+        Exit
     </div>
 </div>

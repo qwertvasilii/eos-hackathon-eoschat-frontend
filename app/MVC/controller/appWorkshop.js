@@ -58,7 +58,10 @@ export default {
         return localStorage.getItem(config.localStorageChatKeysPrefix + nickname);
     },
     sendMessage: (message) => {
-        return eosController.sendMessage(store.getPrivateKeys().active, message, store.getNickname(), localStorage.getItem('selected-chat-user'), true);
+        let self = this;
+        return eosController.sendMessage(store.getPrivateKeys().active, message, store.getNickname(), localStorage.getItem('selected-chat-user'), true).then(encrypted => {
+            store.addPreMessage({from: store.getNickname(), to: localStorage.getItem('selected-chat-user'), message: encrypted.message, trx_id: encrypted.trx_id})
+        })
     },
     transfer: (amount) => {
         Backbone.loading.show();
