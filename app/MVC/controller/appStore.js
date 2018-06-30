@@ -8,9 +8,11 @@ import { decryptSessionKey } from '../../utils/crypto';
 import workshop from './appWorkshop';
 import errrorWrapper from './appErrorWrapper';
 import loadingView from '../view/loading/loadingView';
+import errorWrapper from './appErrorWrapper'
 
 class Store {
     constructor() {
+        
         this.store = {
             firstLoaded: false,
             masterKey: localStorage.getItem(config.localStorageMasterPrivateKey) || null,
@@ -82,6 +84,8 @@ class Store {
         return eosController.generateKeysFromMnemonic(seed).then(keys => {
             self.setKeys(keys, mnemonic);
             return; 
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
         // return eosController.generateKeys().then(keys => {
         //     self.setKeys(keys);
@@ -117,6 +121,8 @@ class Store {
             } else {
                 return {success: false, err: 'soon'};
             }
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     }
     getUsers() {
@@ -127,6 +133,8 @@ class Store {
         let nick = this.store.nickname;
         return eosController.loadUsers().then(data => {
             self.store.users.add(_.filter(data.rows, _row => { return _row.account_name !== nick}), {merge: true});
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     }
     addPreMessage(msg) {
@@ -181,6 +189,8 @@ class Store {
                 } 
                 self.store.numbers.set('new_msg', totalMsg);
             })
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     }
     loadData() {
@@ -191,24 +201,32 @@ class Store {
             return self.loadTransactions();
         }).then(() => {
             return self.loadBalance();
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     }
     loadTransactions() {
         let self = this;
         return eosController.loadTransactions(this.store.nickname).then(data => {
             self.store.transactions.add(data, {merge: true});
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     }
     loadBalance() {
         let self = this;
         return eosController.getBalance(this.store.nickname).then(data => {
             self.store.balance.set({amount: data[0]})
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     }
     startPolling() {
         let self = this;
         this.loadData().then(() => {
             self.startPolling();
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     }
 }

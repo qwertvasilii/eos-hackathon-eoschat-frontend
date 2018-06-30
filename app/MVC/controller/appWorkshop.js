@@ -40,6 +40,8 @@ export default {
     signIn: (mnemonic) => {
         return store.generateKeysFromMnemonic(mnemonic).then(result => {
             return result;
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     },
     contractSignUp: () => {
@@ -51,7 +53,8 @@ export default {
         })
     },
     loadMessages: (userList) => {
-        return eosController.loadMessages(store.getNickname()).then(data => {
+        return eosController.loadMessages(store.getNickname()).catch(err => {
+            errorWrapper.wrap(err);
         })
     },
     getChatKeys: (nickname) => {
@@ -61,12 +64,16 @@ export default {
         let self = this;
         return eosController.sendMessage(store.getPrivateKeys().active, message, store.getNickname(), localStorage.getItem('selected-chat-user'), true).then(encrypted => {
             store.addPreMessage({from: store.getNickname(), to: localStorage.getItem('selected-chat-user'), message: encrypted.message, trx_id: encrypted.trx_id})
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     },
     transfer: (amount) => {
         Backbone.loading.show();
         return eosController.transfer(store.getPrivateKeys().active, amount, store.getNickname(), localStorage.getItem('selected-chat-user')).then(() => {
             Backbone.loading.hide();
+        }).catch(err => {
+            errorWrapper.wrap(err);
         })
     },
     decryptMessage: (message) => {

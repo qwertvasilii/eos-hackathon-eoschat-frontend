@@ -2,6 +2,7 @@ import Marionette from 'backbone.marionette';
 import template from './templates/send-template.jst';
 import workshop from '../../controller/appWorkshop';
 import Inputmask from 'inputmask';
+import store from '../../controller/appStore'
 
 export default Marionette.View.extend({
     template: template,
@@ -21,13 +22,19 @@ export default Marionette.View.extend({
         im.mask('#amount-input')
     },
     send: function(){
+        this.$('#helper-error').html('')
         let amount = parseFloat(this.$('#amount-input').val());
         let self = this;
-        const result = confirm('Confirm sending')
-        if (amount && result) {
-            workshop.transfer(amount).then(data => {
-                self.remove();
-            })
+        let balance = parseFloat(store.store.balance.get('amount').split(' ')[0])
+        if (amount > balance) {
+            this.$('#helper-error').html('Amount is bigger than your balance')
+        } else {
+            const result = confirm('Confirm sending')
+            if (amount && result) {
+                workshop.transfer(amount).then(data => {
+                    self.remove();
+                })
+            }
         }
     }
 })
