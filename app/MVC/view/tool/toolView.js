@@ -44,11 +44,13 @@ export default Marionette.View.extend({
         if (e.keyCode === 13) this.sendMsg()
     },
     disable: function(){
-        this.$('#send-msg').addClass('disabled');
-        this.$('#msg-input').attr('disabled',true);
+        this.$('#msg-input').attr('disabled', 'true');
+        this.$('#send-msg').attr('disabled','true');
+        this.$('#transfer').attr('disabled', 'true');
     },
     enable: function(){
-        this.$('#send-msg').removeClass('disabled');
         this.$('#msg-input').removeAttr('disabled');
+        this.$('#send-msg').removeAttr('disabled');
+        this.$('#transfer').removeAttr('disabled');
     }
 })
