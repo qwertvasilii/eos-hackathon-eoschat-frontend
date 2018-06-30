@@ -9,7 +9,7 @@ export default Marionette.View.extend({
     template: template,
     className: 'row header',
     initialize: function(){
-        store.store.balance.on('change', this.render, this)
+        store.store.balance.on('change', this.changeBalance, this)
     },
     regions: {
         search: {
@@ -35,5 +35,8 @@ export default Marionette.View.extend({
     mnemonicRedirect: function(e){
         e.preventDefault();
         Backbone.history.navigate('/mnemonic', {trigger: true});
+    },
+    changeBalance: function(){
+        this.$('#balance-field').html('Balance: ' + store.store.balance.get('amount'))
     }
 })
