@@ -14,10 +14,10 @@ module.exports = {
     localStorageMnemonic: kebabPlatfromName + '-mnemonic',
 
     //api
-    nodeProtocol: 'http://',
-    nodeUrl: '18.219.50.252/nodeapi',
-    serverProtocol: 'http://',
-    serverUrl: '18.219.50.252',
+    nodeProtocol: 'https://',
+    nodeUrl: 'chat.i-link.pro/nodeapi',
+    serverProtocol: 'https://',
+    serverUrl: 'chat.i-link.pro',
     serverPort: '3000',
     serverRegistrationPath: '/signup/',
 
