@@ -18,7 +18,6 @@ module.exports = {
     nodeUrl: 'chat.i-link.pro/nodeapi',
     serverProtocol: 'https://',
     serverUrl: 'chat.i-link.pro',
-    serverPort: '3000',
     serverRegistrationPath: '/signup/',
 
     contractName: 'eoschat'

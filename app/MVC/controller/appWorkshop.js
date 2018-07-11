@@ -7,7 +7,7 @@ import { generateSessionKey, encryptSessionKey, decryptSessionKey, decryptMessag
 var Buffer = require('buffer/').Buffer
 
 
-const url = config.serverProtocol + config.serverUrl + ':' + config.serverPort;
+const url = config.serverProtocol + config.serverUrl;
 
 export default {
     getMnemonicSaved: () => {
