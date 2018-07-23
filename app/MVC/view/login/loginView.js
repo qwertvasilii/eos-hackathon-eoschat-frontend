@@ -1,7 +1,6 @@
 import Marionette from 'backbone.marionette';
 import Backbone from 'backbone';
 import template from './templates/login-template.jst';
-import './templates/login.css';
 import captain from '../../../img/captain.png';
 import config from '../../controller/appConfig';
 import workshop from '../../controller/appWorkshop';

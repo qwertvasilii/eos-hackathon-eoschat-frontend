@@ -21,5 +21,12 @@ export default Marionette.View.extend({
     onRender: function(){
             let self = this;
             self.showChildView('userList', new TransactionListView({collection: store.store.transactions}));
+    },
+    onAttach: function(){
+        ////!!!!!
+        if($(window).width() <= 991){
+            $('.right').addClass('d-none');
+        }
+        /////
     }
 })

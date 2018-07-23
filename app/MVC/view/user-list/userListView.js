@@ -1,13 +1,12 @@
 import Marionette from 'backbone.marionette';
 import UserListEmptyView from './userListEmptyView';
 import UserView from './userView';
-import './templates/user-list.css';
 import UserList from '../../model/collections/UserList';
 
 export default Marionette.CollectionView.extend({
     childView: UserView,
     emptyView: UserListEmptyView,
-    className: 'col-md-3',
+    className: 'contacts__list row',
     initialize: function(){
         this.initialCollection = this.collection
         this.initialCollection.on('search', this.search, this);
@@ -31,5 +30,14 @@ export default Marionette.CollectionView.extend({
             this.collection = this.initialCollection;            
         }
         this.render();
+    },
+    hide: function(){
+        this.$el.addClass('d-none')
+    },
+    show: function(){
+        this.$el.removeClass('d-none')
+        this.children.forEach(_view => {
+            _view.removeSelected();
+        })
     }
 })

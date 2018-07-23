@@ -1,5 +1,11 @@
-<input type="text" class="form-control input" placeholder="Message..." id="msg-input">
-<div class="input-group-append">
-    <button type="button" id="send-msg" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
-    <button type="button" id="transfer" class="btn btn-primary"><i class="fa fa-connectdevelop"></i></button>
-</div>
+<form class="send-message input-group d-none">
+    <input id="msg-input" class="form-control" type="text" placeholder="Message...">
+    <div class="input-group-append">
+        <button class="btn btn-violet" id="transfer" type="button" data-toggle="modal" data-target="#send-eos">
+            <i class="fa fa-connectdevelop"></i>
+        </button>
+        <button class="btn btn-violet" id="send-msg" type="button">
+            <i class="fa fa-paper-plane"></i>
+        </button>						
+    </div>
+</form>

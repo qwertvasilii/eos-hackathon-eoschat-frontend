@@ -3,7 +3,7 @@ import template from './templates/mnemonic-template.jst';
 import store from '../../controller/appStore';
 export default Marionette.View.extend({
     template: template,
-    className: 'row content',
+    className: 'row',
     templateContext: function(){
         return {
             seedPhrase: store.getMnemonic()

@@ -1,26 +1,31 @@
-<div class="row justify-content-md-center">
-    <h1>Send EOS</h1>
-</div>
-<div class="row justify-content-md-center">
-    <div class="col-md-3">
-        <select class="form-control" id="currency-select">
-            <option selected>EOS</option>
-            <option disabled>Bitcoin</option>
-            <option disabled>Ether</option>
-        </select>
-    </div>
-    <div class="col-md-3">
-        <input class="form-control input" placeholder="Enter amount" id="amount-input">
-    </div>
-</div>
-<div class="row justify-content-md-center">
-    <div class="col-md-5" id="helper-error"></div>
-</div>
-<div class="row justify-content-md-center" id="send-button-row">
-    <div class="col-md-3">
-        <button class="btn btn-lg btn-primary btn-block" type="button" id="close-send">Cancel</button>
-    </div>
-    <div class="col-md-3">
-        <button class="btn btn-lg btn-primary btn-block" type="button" id="send">Send</button>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Send EOS</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <select class="form-control" id="currency-select">
+                        <option selected="">EOS</option>
+                        <option disabled="">Bitcoin</option>
+                        <option disabled="">Ether</option>
+                    </select>						
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control input" placeholder="Enter amount" id="amount-input">
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div id="helper-error"></div>
+            </div>
+        </div>				
+        <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-grey btn--modal-p" data-dismiss="modal" aria-label="Close">Cancel</button>
+            <button type="button" class="btn btn-violet btn--modal-p" id="send">Send</button>
+        </div>
     </div>
 </div>

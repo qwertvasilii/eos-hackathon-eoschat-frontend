@@ -1,21 +1,29 @@
 <div class="row">
-    <div class="col-md-3 menu-item <% if (!active) { %> active <% } %>" id="main">
-        <i class="fa fa-comments fa-2x"></i><br>
-        Chats
-        <% if (new_msg > 0) { %>
-            <span class="badge badge-pill badge-danger"><%= new_msg %></span>
-        <% } %>
+    <div class="col-md-3 menu-item active" id="main">
+        <button class="panel__btn  <% if (!active) { %> panel__btn--active <% } %> d-flex justify-content-center align-items-center">
+            <i class="fa fa-comments fa-lg"></i>
+            <span class="panel__caption">Chats</span>
+            <% if (new_msg) { %>
+                <span class="badge badge-pill badge-danger"><%= new_msg %></span>
+            <% } %>
+        </button>
     </div>
-    <div class="col-md-3 menu-item <% if (active === 'transactions') { %> active <% } %>" id="transactions">
-        <i class="fa fa-exchange fa-2x"></i><br>
-        Txs
+    <div class="col-md-3 menu-item" id="transactions">
+        <button class="panel__btn d-flex <% if (active === 'transactions') { %> panel__btn--active <% } %> justify-content-center align-items-center">
+            <i class="fa fa-exchange fa-lg"></i>
+            <span class="panel__caption">Txs</span>
+        </button>
     </div>
     <div class="col-md-3 menu-item" id="escrow">
-        <i class="fa fa-handshake-o fa-2x"></i><br>
-        Escrow
+        <button class="panel__btn d-flex justify-content-center align-items-center" data-toggle="modal" data-target="#escrow-modal">
+            <i class="fa fa-handshake-o fa-lg"></i>
+            <span class="panel__caption">Escrow</span>
+        </button>
     </div>
     <div class="col-md-3 menu-item" id="logout">
-        <i class="fa fa-sign-out fa-2x"></i><br>
-        Exit
+        <button class="panel__btn d-flex justify-content-center align-items-center">
+            <i class="fa fa-sign-out fa-lg"></i>
+            <span class="panel__caption">Exit</span>
+        </button>
     </div>
 </div>

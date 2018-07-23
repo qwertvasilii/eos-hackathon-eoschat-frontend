@@ -1,5 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~notie/dist/notie.css";
+@import "./css/style.css";
 
 #fade {
     display: none;

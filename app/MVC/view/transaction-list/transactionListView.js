@@ -3,7 +3,7 @@ import TransactionView from './transactionView';
 
 export default Marionette.CollectionView.extend({
     childView: TransactionView,
-    className: 'col-md-3',
+    className: 'txs row',
     attributes: {
         id: 'user-list'
     },

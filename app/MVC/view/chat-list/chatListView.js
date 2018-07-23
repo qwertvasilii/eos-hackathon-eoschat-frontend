@@ -5,7 +5,7 @@ import workshop from '../../controller/appWorkshop';
 
 export default Marionette.CollectionView.extend({
     childView: ChatView,
-    className: 'container col-md-9',
+    className: 'right messages col-lg-8',
     attributes: {
         id: 'chat-box'
     },
@@ -46,9 +46,18 @@ export default Marionette.CollectionView.extend({
         }
     },
     onAttach: function(){
-        $('#tool').css('display','flex');
+        if($(window).width() <= 991){
+            this.$el.addClass('d-none');
+        }
+        $('.send-message').removeClass('d-none');
         this.$el.animate({
             scrollTop: this.$el.prop('scrollHeight')
         }, 700)
+    },
+    show: function(){
+        this.$el.removeClass('d-none');
+    },
+    hide: function(){
+        this.$el.addClass('d-none');
     }
 })

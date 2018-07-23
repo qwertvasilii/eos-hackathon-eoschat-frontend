@@ -4,14 +4,26 @@ import workshop from '../../controller/appWorkshop';
 
 export default Marionette.View.extend({
     template: template,
-    className: 'col-md-9 input-group',
+    className: 'right right-send col-lg-8',
     attributes: {
         id: 'tool',
-        style: 'display: none;'
+        // style: 'display: none;'
+    },
+    onAttach: function(){
+        if($(window).width() <= 991){
+            this.$el.addClass('d-none');
+        }
+    },
+    show: function(){
+        this.$el.removeClass('d-none')
+    },
+    hide: function(){
+        this.$el.addClass('d-none')
     },
     events: {
         'click #send-msg' : 'sendMsg',
-        'keyup #msg-input' : 'keyup'
+        'keyup #msg-input' : 'keyup',
+        'submit .send-message' : 'submit'
     },
     unblock: function(){
         this.$('#msg-input').removeAttr('disabled');
@@ -40,8 +52,9 @@ export default Marionette.View.extend({
     triggers: {
         'click #transfer' : 'transfer:click'
     },
-    keyup: function(e){
-        if (e.keyCode === 13) this.sendMsg()
+    submit: function(e){
+        e.preventDefault();
+        this.sendMsg()
     },
     disable: function(){
         this.$('#msg-input').attr('disabled', 'true');

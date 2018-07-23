@@ -4,7 +4,7 @@ import store from '../../controller/appStore';
 
 export default Marionette.View.extend({
     template: template,
-    className: 'row user-contact',
+    className: 'txs__item',
     templateContext: {
         user: store.getNickname()
     }

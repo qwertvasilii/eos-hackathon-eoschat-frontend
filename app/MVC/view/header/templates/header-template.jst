@@ -1,19 +1,10 @@
-<div id="search" class="col-md-3">
-   
-</div>
-<div class="info row col-md-9" id="header-row">
-    <div class-"col-md-1">
-        <% if (!mnemonicSaved) { %>
-            <a href="#" id="mnemonic-href"><i class="fa fa-envira"></i> Seed phrase</a>
-        <% } %>
+    <button class="profile__back d-none">
+        <i class="fa fa-chevron-left"></i>
+    </button>
+    <div class="profile__box">
+        <img class="profile__photo" src=<%= "data:image/png;base64," + avatar %> alt="user-avatar">
     </div>
-    <div class="col-md-4">
-        <%= nickname %>
+    <div class="profile__info">
+        <p class="profile__name"><%= nickname %></p>
+        <p class="profile__balance">Balance: <%= balance %></p>
     </div>
-    <div class="col-md-3 offset-md-3 float-left" id="balance-field">
-        Balance: <%= balance %>
-    </div>
-    <div class="col-md-1" id="loading-place">
-    
-</div>
-</div>

@@ -4,7 +4,6 @@ import menuView from '../../view/menu/menuView';
 import toolView from '../tool/toolView';
 import sendView from '../send/sendView';
 import escrowView from '../escrow/escrowView';
-import './templates/footer.css';
 
 export default Marionette.View.extend({
     template: template,
@@ -37,5 +36,11 @@ export default Marionette.View.extend({
     },
     onChildviewEscrowClick: function(){
         this.showChildView('modal', new escrowView());
+    },
+    showInput: function(){
+        this.getChildView('tool').show();
+    },
+    hideInput: function(){
+        this.getChildView('tool').hide();
     }
 })

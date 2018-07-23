@@ -1,11 +1,9 @@
-<div class="avatar">
-    <img class="avatar-circle" width=40 height=40 src=<%= "data:image/png;base64," + avatar %>>
-</div>
-<div class="col-md-10 contact-info">
-    <div>
-        <%= username %>
+<a class="contacts__chat-link d-flex justify-content-between align-items-center" href="#">
+    <div class="contact d-flex align-items-center">
+        <img class="contact__photo mr-3" src=<%= "data:image/png;base64," + avatar %> width="40" height="40" alt="Chris Golden">
+        <span class="contact__name"><%= username %></span>
     </div>
     <% if (new_msg > 0) { %>
-        <span class="badge badge-danger"><%= new_msg %></span>
+        <span class="badge badge-danger badge-pill"><%= new_msg %></span>
     <% } %>
-</div>
+</a>

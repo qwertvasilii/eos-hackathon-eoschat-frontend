@@ -5,14 +5,14 @@ import workshop from '../../controller/appWorkshop';
 
 export default Marionette.View.extend({
     template: template,
-    className: 'row',
+    className: 'messages__body row',
     initialize: function(){
         // this.model.on('change', this.render, this);
     },
     onRender: function(){
-        $('#tool').css('display','flex');
+        $('.send-message').removeClass('d-none');
         if (this.model.get('from') === store.getNickname()) {
-            this.$('.message').addClass('offset-md-7');
+            this.$('.messages__item').addClass('messages__item--me');
         }
        
     },
@@ -22,7 +22,7 @@ export default Marionette.View.extend({
         else {
             try {
                 let decoded = workshop.decryptMessage(this.model.get('message'))
-                this.$('.message').html(this.escapeHtml(decoded))
+                this.$('.messages__item').html(this.escapeHtml(decoded))
             } catch(e) {
                 this.remove();
             }

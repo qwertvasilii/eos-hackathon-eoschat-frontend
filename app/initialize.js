@@ -1,6 +1,6 @@
-import './styles/application.css';
 import 'bootstrap';
 import 'font-awesome-webpack';
+import './styles/css/style.css';
 import router from './MVC/controller/appRouter';
 import LoadingView from './MVC/view/loading/loadingView';
 
