@@ -24,8 +24,6 @@ export default Marionette.View.extend({
         }
     },
     onRender: function(){
-        // this.showChildView('footer', new FooterView()); 
-        // this.showChildView('header', new HeaderView());
         this.showChildView('content', new MnemonicView());
     },
 })
